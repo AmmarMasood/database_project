@@ -5,39 +5,32 @@ import axios from "axios";
 import moment from "moment";
 import { server } from "../../Server";
 import { withRouter } from "react-router-dom";
+
 const Employees = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [dob, setDob] = useState(moment(new Date()).format("DD-MMM-YYYY"));
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [designation, setDesignation] = useState("");
-  const [joinDate, setJoinDate] = useState(
-    moment(new Date()).format("DD-MMM-YYYY")
-  );
 
   function createEmployee() {
-    if (name && email && dob && phone && address && designation && joinDate) {
+    if (name && email && phone && address) {
       var bodyFormData = new FormData();
       bodyFormData.append("name", name);
       bodyFormData.append("email", email);
-      bodyFormData.append("dob", moment(dob).format("DD-MMM-YYYY"));
       bodyFormData.append("phone", phone);
       bodyFormData.append("address", address);
-      bodyFormData.append("designation", designation);
-      bodyFormData.append("join_date", moment(joinDate).format("DD-MMM-YYYY"));
       axios({
         method: "post",
-        url: `${server}/create/employee`,
+        url: `${server}/create/supplier`,
         data: bodyFormData,
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
           console.log(res.data);
-          alert("Employee Created");
+          alert("Supplier Created");
         })
         .catch((err) => {
-          alert("Can not create employee");
+          alert("Can not create supplier");
           console.log(err);
         });
     } else {
@@ -63,7 +56,7 @@ const Employees = (props) => {
       >
         Logout
       </Button>
-      <h4>Create Employee</h4>
+      <h4>Create Supplier</h4>
       <div
         style={{
           // border: "1px solid red",
@@ -90,16 +83,6 @@ const Employees = (props) => {
         />
         <TextField
           id="outlined-required"
-          label="Date of Birth"
-          value={dob}
-          type="date"
-          InputLabelProps={{ shrink: true }}
-          onChange={(e) => setDob(e.target.value)}
-          variant="outlined"
-          style={{ marginBottom: "20px" }}
-        />
-        <TextField
-          id="outlined-required"
           label="Phone"
           value={phone}
           type="number"
@@ -115,24 +98,6 @@ const Employees = (props) => {
           variant="outlined"
           style={{ marginBottom: "20px" }}
         />
-        <TextField
-          id="outlined-required"
-          label="Designation"
-          value={designation}
-          onChange={(e) => setDesignation(e.target.value)}
-          variant="outlined"
-          style={{ marginBottom: "20px" }}
-        />
-        <TextField
-          id="outlined-required"
-          label="Join Date"
-          type="date"
-          value={joinDate}
-          InputLabelProps={{ shrink: true }}
-          onChange={(e) => setJoinDate(e.target.value)}
-          variant="outlined"
-          style={{ marginBottom: "20px" }}
-        />
       </div>
       <Button
         style={{ marginTop: "10px" }}
@@ -140,7 +105,7 @@ const Employees = (props) => {
         variant="contained"
         color="primary"
       >
-        Create Employee
+        Create Supplier
       </Button>
     </div>
   );

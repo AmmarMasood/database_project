@@ -8,11 +8,13 @@ import { Link } from "react-router-dom";
 function ManagerSingup(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
   function onSignup() {
-    if (username.length > 0 && password.length > 0) {
+    if (username.length > 0 && password.length > 0 && employeeId.length > 0) {
       var bodyFormData = new FormData();
       bodyFormData.append("username", username);
       bodyFormData.append("password", password);
+      bodyFormData.append("employee_id", employeeId);
       axios({
         method: "post",
         url: `${server}/signup/manager`,
@@ -25,7 +27,7 @@ function ManagerSingup(props) {
         })
         .catch((err) => {
           console.log(err);
-          alert("Error while sign up");
+          alert("Please enter correct username or employee id");
         });
     } else {
       alert("Please fill the fields");
@@ -47,6 +49,16 @@ function ManagerSingup(props) {
       }}
     >
       <h1>Signup As A Manager</h1>
+      <TextField
+        required
+        id="outlined-required"
+        label="Employee Id"
+        type="number"
+        value={employeeId}
+        onChange={(e) => setEmployeeId(e.target.value)}
+        variant="outlined"
+        style={{ marginBottom: "20px" }}
+      />
       <TextField
         required
         id="outlined-required"
@@ -74,7 +86,7 @@ function ManagerSingup(props) {
       </p>
       <p style={{ padding: "0", margin: "0" }}>
         Are you a employee?{" "}
-        <Link to="/signup/manager">Signup as a employee</Link>
+        <Link to="/signup/employee">Signup as a employee</Link>
       </p>
     </div>
   );

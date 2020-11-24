@@ -18,32 +18,98 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
-import Language from "@material-ui/icons/Language";
-// core components/views for Admin layout
-import DashboardPage from "views/Dashboard/Dashboard.js";
-import UserProfile from "views/UserProfile/UserProfile.js";
+import Face from "@material-ui/icons/Face";
 import TableList from "views/TableList/TableList.js";
-import Typography from "views/Typography/Typography.js";
-import Icons from "views/Icons/Icons.js";
-import Maps from "views/Maps/Maps.js";
-import NotificationsPage from "views/Notifications/Notifications.js";
-import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
-// core components/views for RTL layout
-import RTLPage from "views/RTLPage/RTLPage.js";
 import Employees from "./views/Dashboard/Employees";
+import Customers from "./views/Dashboard/Customers";
+import Supplier from "./views/Dashboard/Supplier";
+import Products from "./views/Dashboard/Products";
+import AllEmployees from "./views/Dashboard/AllEmployees";
+import PointOfSale from "./views/Dashboard/PointOfSale";
+import CreateOrders from "./views/Dashboard/CreateOrders";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import Remove from "./views/Dashboard/Remove";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
+const adminRoutes = [
+  {
+    path: "/dashboard",
+    name: "Create Employee",
+    rtlName: "لوحة القيادة",
+    icon: Dashboard,
+    component: Employees,
+    layout: "/admin",
+  },
+  {
+    path: "/all-employees",
+    name: "All Employees",
+    rtlName: "لوحة القيادة",
+    icon: Dashboard,
+    component: AllEmployees,
+    layout: "/admin",
+  },
+  {
+    path: "/remove-stuff",
+    name: "Remove",
+    rtlName: "الرموز",
+    icon: DeleteForeverIcon,
+    component: Remove,
+    layout: "/admin",
+  },
+];
+
+const employeeRoles = [
+  {
+    path: "/dashboard",
+    name: "Point Of Sale",
+    rtlName: "لوحة القيادة",
+    icon: AddShoppingCartIcon,
+    component: PointOfSale,
+    layout: "/admin",
+  },
+  {
+    path: "/typography",
+    name: "Customers",
+    rtlName: "طباعة",
+    icon: AccountCircleIcon,
+    component: Customers,
+    layout: "/admin",
+  },
+  {
+    path: "/supplier",
+    name: "Supplier",
+    rtlName: "الرموز",
+    icon: Face,
+    component: Supplier,
+    layout: "/admin",
+  },
+  {
+    path: "/products",
+    name: "Products",
+    rtlName: "الرموز",
+    icon: BubbleChart,
+    component: Products,
+    layout: "/admin",
+  },
+  {
+    path: "/create-orders",
+    name: "Create Orders",
+    rtlName: "الرموز",
+    icon: AddBoxIcon,
+    component: CreateOrders,
+    layout: "/admin",
+  },
+];
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Point Of Sale",
     rtlName: "لوحة القيادة",
-    icon: Dashboard,
-    component: DashboardPage,
+    icon: AddShoppingCartIcon,
+    component: PointOfSale,
     layout: "/admin",
   },
   {
@@ -65,24 +131,32 @@ const dashboardRoutes = [
     path: "/typography",
     name: "Customers",
     rtlName: "طباعة",
-    icon: LibraryBooks,
-    component: Typography,
+    icon: AccountCircleIcon,
+    component: Customers,
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "POS",
+    path: "/supplier",
+    name: "Supplier",
+    rtlName: "الرموز",
+    icon: Face,
+    component: Supplier,
+    layout: "/admin",
+  },
+  {
+    path: "/products",
+    name: "Products",
     rtlName: "الرموز",
     icon: BubbleChart,
-    component: Icons,
+    component: Products,
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Settings",
-    rtlName: "خرائط",
-    icon: LocationOn,
-    component: Maps,
+    path: "/create-orders",
+    name: "Create Orders",
+    rtlName: "الرموز",
+    icon: AddBoxIcon,
+    component: CreateOrders,
     layout: "/admin",
   },
   // {
@@ -95,4 +169,8 @@ const dashboardRoutes = [
   // },
 ];
 
-export default dashboardRoutes;
+export default localStorage.getItem("ROLE") === "admin"
+  ? adminRoutes
+  : localStorage.getItem("ROLE") === "employee"
+  ? employeeRoles
+  : dashboardRoutes;

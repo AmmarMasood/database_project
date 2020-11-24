@@ -5,39 +5,34 @@ import axios from "axios";
 import moment from "moment";
 import { server } from "../../Server";
 import { withRouter } from "react-router-dom";
-const Employees = (props) => {
+
+const Customers = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState(moment(new Date()).format("DD-MMM-YYYY"));
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [designation, setDesignation] = useState("");
-  const [joinDate, setJoinDate] = useState(
-    moment(new Date()).format("DD-MMM-YYYY")
-  );
+  const [points, setpoints] = useState(10);
 
-  function createEmployee() {
-    if (name && email && dob && phone && address && designation && joinDate) {
+  function createCustomers() {
+    if (name && email && dob && phone && points) {
       var bodyFormData = new FormData();
       bodyFormData.append("name", name);
       bodyFormData.append("email", email);
       bodyFormData.append("dob", moment(dob).format("DD-MMM-YYYY"));
       bodyFormData.append("phone", phone);
-      bodyFormData.append("address", address);
-      bodyFormData.append("designation", designation);
-      bodyFormData.append("join_date", moment(joinDate).format("DD-MMM-YYYY"));
+      bodyFormData.append("points", points);
       axios({
         method: "post",
-        url: `${server}/create/employee`,
+        url: `${server}/create/customer`,
         data: bodyFormData,
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
           console.log(res.data);
-          alert("Employee Created");
+          alert("Customer Created");
         })
         .catch((err) => {
-          alert("Can not create employee");
+          alert("Can not create Customer");
           console.log(err);
         });
     } else {
@@ -63,7 +58,7 @@ const Employees = (props) => {
       >
         Logout
       </Button>
-      <h4>Create Employee</h4>
+      <h4>Create Customers</h4>
       <div
         style={{
           // border: "1px solid red",
@@ -90,10 +85,10 @@ const Employees = (props) => {
         />
         <TextField
           id="outlined-required"
-          label="Date of Birth"
-          value={dob}
-          type="date"
           InputLabelProps={{ shrink: true }}
+          label="Date of Birth"
+          type="date"
+          value={dob}
           onChange={(e) => setDob(e.target.value)}
           variant="outlined"
           style={{ marginBottom: "20px" }}
@@ -109,41 +104,24 @@ const Employees = (props) => {
         />
         <TextField
           id="outlined-required"
-          label="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          label="Points"
+          type="number"
+          value={points}
+          onChange={(e) => setpoints(e.target.value)}
           variant="outlined"
-          style={{ marginBottom: "20px" }}
-        />
-        <TextField
-          id="outlined-required"
-          label="Designation"
-          value={designation}
-          onChange={(e) => setDesignation(e.target.value)}
-          variant="outlined"
-          style={{ marginBottom: "20px" }}
-        />
-        <TextField
-          id="outlined-required"
-          label="Join Date"
-          type="date"
-          value={joinDate}
-          InputLabelProps={{ shrink: true }}
-          onChange={(e) => setJoinDate(e.target.value)}
-          variant="outlined"
-          style={{ marginBottom: "20px" }}
+          style={{ marginBottom: "20px", display: "none" }}
         />
       </div>
       <Button
         style={{ marginTop: "10px" }}
-        onClick={createEmployee}
+        onClick={createCustomers}
         variant="contained"
         color="primary"
       >
-        Create Employee
+        Create Customers
       </Button>
     </div>
   );
 };
 
-export default withRouter(Employees);
+export default withRouter(Customers);

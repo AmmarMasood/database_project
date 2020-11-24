@@ -21,11 +21,14 @@ function Login(props) {
       })
         .then((res) => {
           console.log(res.data);
+          localStorage.setItem("ROLE", res.data.role);
+          localStorage.setItem("ID", res.data.employee_id);
           props.history.push("/admin");
+          window.location.reload(false);
         })
         .catch((err) => {
           console.log(err);
-          alert("Error while login");
+          alert("Please enter correct username or password");
         });
     } else {
       alert("Please fill the fields");

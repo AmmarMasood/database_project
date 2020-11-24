@@ -5,14 +5,16 @@ import Button from "@material-ui/core/Button";
 import { server } from "../../Server";
 import { Link } from "react-router-dom";
 
-function EmployeeSignup() {
+function EmployeeSignup(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  function onSignup(props) {
-    if (username.length > 0 && password.length > 0) {
+  const [employeeId, setEmployeeId] = useState("");
+  function onSignup() {
+    if (username.length > 0 && password.length > 0 && employeeId.length > 0) {
       var bodyFormData = new FormData();
       bodyFormData.append("username", username);
       bodyFormData.append("password", password);
+      bodyFormData.append("employee_id", employeeId);
       axios({
         method: "post",
         url: `${server}/signup/employee`,
@@ -25,7 +27,7 @@ function EmployeeSignup() {
         })
         .catch((err) => {
           console.log(err);
-          alert("Error while sign up");
+          alert("Please enter correct username or employee id");
         });
     } else {
       alert("Please fill the fields");
@@ -47,6 +49,16 @@ function EmployeeSignup() {
       }}
     >
       <h1>Signup As A Employee</h1>
+      <TextField
+        required
+        id="outlined-required"
+        label="Employee Id"
+        type="number"
+        value={employeeId}
+        onChange={(e) => setEmployeeId(e.target.value)}
+        variant="outlined"
+        style={{ marginBottom: "20px" }}
+      />
       <TextField
         required
         id="outlined-required"
@@ -73,8 +85,7 @@ function EmployeeSignup() {
         Already have an account? <Link to="/">Login</Link>
       </p>
       <p style={{ padding: "0", margin: "0" }}>
-        Are you a manager?{" "}
-        <Link to="/signup/employee">Signup as a manager</Link>
+        Are you a manager? <Link to="/signup/manager">Signup as a manager</Link>
       </p>
     </div>
   );
